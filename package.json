@@ -1,0 +1,22 @@
+{
+    "name": "my-portal",
+    "version": "0.1.0",
+    "description": "Electron App Demo",
+    "devDependencies": {
+        "gulp": "^3.9.0",
+        "gulp-sass": "^2.1.1",
+        "gulp-electron": "^0.0.9",
+        "node-reset-scss": "^1.0.1",
+        "rcedit": "^0.3.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aynurin/miniature-octo-winner.git"
+    },
+    "author": "Shavkat Aynurin <sh@ayn.su>",
+    "license": "Unlicense",
+    "bugs": {
+        "url": "https://github.com/aynurin/miniature-octo-winner/issues"
+    },
+    "homepage": "https://github.com/aynurin/miniature-octo-winner#readme"
+}
