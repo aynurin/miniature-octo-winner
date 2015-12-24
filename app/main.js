@@ -4,7 +4,8 @@ const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
 const DEBUG = true;
-const window = require('./env/window');
+const window = require('./env/windowManager');
+const tray = require('./env/trayActivity');
 
 // Report crashes to our server.
 electron.crashReporter.start();
@@ -45,6 +46,26 @@ app.on('ready', function () {
     // Create the browser window.
     mainWindow = new BrowserWindow(windowOptions);
 
+    var trayIconHandlers = {
+        title: windowOptions.title,
+        showDevTools: function () {
+            mainWindow.show();
+            mainWindow.webContents.openDevTools({ detach: true });
+        },
+        showWindow: function () {
+            mainWindow.focus();
+            mainWindow.show();
+        },
+        hideWindow: function () {
+            mainWindow.hide();
+        },
+        terminate: function () {
+            app.quit();
+        }
+    }
+
+    tray.init(trayIconHandlers);
+
     if (DEBUG) {
         // Open the DevTools.
         mainWindow.webContents.openDevTools({ detach: true });
@@ -56,12 +77,18 @@ app.on('ready', function () {
     mainWindow.on('close', function () {
         window.saveState(mainWindow);
     });
-
+    
+    app.on('before-quit', () => {
+        mainWindow.removeAllListeners('close');
+        mainWindow.close();
+    });
+    
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null;
+        tray.destroy();
     });
 });

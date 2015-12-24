@@ -8,7 +8,8 @@ exports.saveState = function (browserWindow) {
         x: bounds.x,
         y: bounds.y,
         width: bounds.width,
-        height: bounds.height
+        height: bounds.height,
+        visible: browserWindow.isVisible()
     };
     storage.set(windowStateSetting, lastState);
 };
